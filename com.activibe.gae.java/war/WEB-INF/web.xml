@@ -13,6 +13,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>RemoveTodo</servlet-name>
 		<servlet-class>com.activibe.gae.java.ServletRemoveTodo</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ActivibeHandler</servlet-name>
+		<servlet-class>com.activibe.gae.java.ActivibeRequestHandler</servlet-class>
+	</servlet>
+	
+	
 	<servlet-mapping>
 		<servlet-name>RemoveTodo</servlet-name>
 		<url-pattern>/done*</url-pattern>
@@ -21,6 +27,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>CreateNewTodo</servlet-name>
 		<url-pattern>/new</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ActivibeHandler</servlet-name>
+		<url-pattern>/activibe</url-pattern>
+	</servlet-mapping>
+	
+	
 	<welcome-file-list>
 		<welcome-file>main.html</welcome-file>
 	</welcome-file-list>

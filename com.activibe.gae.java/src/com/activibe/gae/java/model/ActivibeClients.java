@@ -17,6 +17,8 @@ public class ActivibeClients {
 	private Key client_activibe_id;
 
 	@Persistent
+	String user_firstame;
+	String user_lastame;
 	String username;
 	String email;
 	String date_joined;
@@ -31,6 +33,14 @@ public class ActivibeClients {
 	String password;
 	String doctorID_Requested_Information;
 
+	public ActivibeClients(String username2, String password2, String email2) {
+		// TODO Auto-generated constructor stub
+		username=username2;
+		password=password2;
+		email=email2;
+		
+	}
+
 	public Key getClient_activibe_id() {
 		return client_activibe_id;
 	}
@@ -39,12 +49,29 @@ public class ActivibeClients {
 		this.client_activibe_id = client_activibe_id;
 	}
 
+	
 	public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getUser_firstame() {
+		return user_firstame;
+	}
+
+	public void setUser_firstame(String user_firstame) {
+		this.user_firstame = user_firstame;
+	}
+
+	public String getUser_lastame() {
+		return user_lastame;
+	}
+
+	public void setUser_lastame(String user_lastame) {
+		this.user_lastame = user_lastame;
 	}
 
 	public String getEmail() {

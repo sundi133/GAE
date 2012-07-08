@@ -1,5 +1,6 @@
 package com.activibe.gae.java.dao;
 
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.jdo.PersistenceManager;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.activibe.gae.java.model.ActivibeClients;
 import com.activibe.gae.java.model.ActivibeStatus;
 import com.activibe.gae.java.model.Cliques;
 import com.activibe.gae.java.model.JobObjects;
@@ -76,6 +78,7 @@ public enum Dao {
 		}
 
 	}
+	
 
 	public static HashMap<String, String> getJobsMap() {
 		// TODO Auto-generated method stub
@@ -148,13 +151,16 @@ public enum Dao {
 		return pressure.split(",");
 	}
 
-	public int addClients() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
 
-		// DatastoreService datastore =
-		// DatastoreServiceFactory.getDatastoreService()
-		// Transaction txn = datastore.beginTransaction();
 
-		return 1;
-	}
+//	public int addClients() {
+//		PersistenceManager pm = PMF.get().getPersistenceManager();
+//
+//		// DatastoreService datastore =
+//		// DatastoreServiceFactory.getDatastoreService()
+//		// Transaction txn = datastore.beginTransaction();
+//
+//		return 1;
+//	}
+
 }
