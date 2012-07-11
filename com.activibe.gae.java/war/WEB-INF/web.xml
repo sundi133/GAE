@@ -5,31 +5,22 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<servlet>
-		<servlet-name>CreateNewTodo</servlet-name>
-		<servlet-class>com.activibe.gae.java.ServletCreateTodo</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>RemoveTodo</servlet-name>
-		<servlet-class>com.activibe.gae.java.ServletRemoveTodo</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>ActivibeHandler</servlet-name>
 		<servlet-class>com.activibe.gae.java.ActivibeRequestHandler</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ActivibeStatusHandler</servlet-name>
+		<servlet-class>com.activibe.gae.java.ActivibeStatusRequestHandler</servlet-class>
+	</servlet>
 	
 	
-	<servlet-mapping>
-		<servlet-name>RemoveTodo</servlet-name>
-		<url-pattern>/done*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CreateNewTodo</servlet-name>
-		<url-pattern>/new</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ActivibeHandler</servlet-name>
 		<url-pattern>/activibe</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ActivibeStatusHandler</servlet-name>
+		<url-pattern>/status</url-pattern>
 	</servlet-mapping>
 	
 	
