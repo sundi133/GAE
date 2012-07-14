@@ -165,20 +165,32 @@ public class ActivibeRequestHandler  extends HttpServlet {
 		//			log.log(Level.SEVERE, "MessagingException" + e.getMessage(), "");
 		//		}
 
+		int count=0;
 		try {
+			count++;
 			MimeMessage message = new MimeMessage(session, null);
+			count++;
 			// Set the body with whatever text you want
 			Multipart outboundMultipart = new MimeMultipart();
+			count++;
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			count++;
 			messageBodyPart.setText(msgBody);
+			count++;
 			message.setSubject(subject);
+			count++;
 			outboundMultipart.addBodyPart(messageBodyPart);
+			count++;
 			message.setContent(outboundMultipart);
+			count++;
 			message.setFrom(new InternetAddress(SENDER, "Activibe Account account"));
+			count++;
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(email, username));
+			count++;
 			Transport.send(message);
+			count++;
 		} catch (MessagingException e) {
-			log.log(Level.SEVERE, "MessagingException" + e.getMessage(), "");
+			log.log(Level.SEVERE, "MessagingException" + count + e.getMessage(), "");
 		}catch (UnsupportedEncodingException e) {
 			log.log(Level.SEVERE, "UnsupportedEncodingException" + e.getMessage(), "");
 		}
