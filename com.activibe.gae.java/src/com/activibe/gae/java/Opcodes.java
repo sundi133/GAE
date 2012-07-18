@@ -17,6 +17,8 @@ public class Opcodes {
 	public final static int LOGIN = 6265; 
 	public final static int NEW_ACCOUNT = 6266;
 	public final static int UPDATE_STATUS = 6267;
+	public final static int GET_UPDATE_STATUS = 6268;
+	public static final int EMAILTOSENDDATA = 6269;
 	
 	public static final int SUCCESS = 200;
 	

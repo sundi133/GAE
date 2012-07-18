@@ -45,7 +45,7 @@ import javax.mail.internet.MimeMessage;
 
 @SuppressWarnings("serial")
 public class ActivibeStatusRequestHandler  extends HttpServlet {
-	private static final Logger log = Logger.getLogger(ActivibeRequestHandler.class.getName()); 
+	private static final Logger log = Logger.getLogger(ActivibeStatusRequestHandler.class.getName()); 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
@@ -64,15 +64,34 @@ public class ActivibeStatusRequestHandler  extends HttpServlet {
 	throws IOException {
 
 		int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
-		resp.setContentType("text/plain");
-		PrintWriter out = resp.getWriter();
-
+		
 		switch (activibeOpcode) {
 		case Opcodes.UPDATE_STATUS :
-			int response = Common.authenticateUser(req);
+			resp.setContentType("text/plain");
+			PrintWriter out = resp.getWriter();
+
+			int response = Common.authenticateUserID(req);
 			if(response==200){
-				
-				out.println(response);
+				int statusupdate=updateStatus(req);
+				out.println(statusupdate);
+			}else{
+				out.println(Opcodes.INVALID_USER);
+			}
+			
+			out.close();
+			break;
+			
+		case Opcodes.GET_UPDATE_STATUS :
+			resp.setContentType("application/json");
+			out = resp.getWriter();
+
+			response = Common.authenticateUserID(req);
+			log.log(Level.SEVERE, "0Status Response" + response, "");
+			
+			
+			if(response==200){
+				String statusupdate=getUpdateStatus(req);
+				out.println(statusupdate);
 			}else{
 				out.println(Opcodes.INVALID_USER);
 			}
@@ -89,11 +108,74 @@ public class ActivibeStatusRequestHandler  extends HttpServlet {
 
 	}
 	
+	private String getUpdateStatus(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		String userid = req.getParameter("userid");
+		String response= ActivibeDataAccessObject.INSTANCE.getActivibeUserStatus(userid);
+		log.log(Level.SEVERE, "Status Response" + response, "");
+		
+		return response;
+	
+	}
+
+	private int updateStatus(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		String userid = req.getParameter("userid");
+		String moodlevel = req.getParameter("moodlevel");
+		String energylevel = req.getParameter("energylevel");
+		String time = req.getParameter("time");
+		String location = req.getParameter("location");
+		String locationType = req.getParameter("locationType");
+		String lat = req.getParameter("lat");
+		String lon = req.getParameter("lon");
+		int response= ActivibeDataAccessObject.INSTANCE.createActivibeUserStatus(userid,moodlevel,energylevel,time,location,locationType,lat,lon);
+		return response;
+	
+	}
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
 
-
+		int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
 		
+		switch (activibeOpcode) {
+		case Opcodes.UPDATE_STATUS :
+			resp.setContentType("text/plain");
+			PrintWriter out = resp.getWriter();
+
+			int response = Common.authenticateUserID(req);
+			if(response==200){
+				int statusupdate=updateStatus(req);
+				out.println(statusupdate);
+			}else{
+				out.println(Opcodes.INVALID_USER);
+			}
+			
+			out.close();
+			break;
+			
+		case Opcodes.GET_UPDATE_STATUS :
+			resp.setContentType("application/json");
+			out = resp.getWriter();
+
+			response = Common.authenticateUserID(req);
+			log.log(Level.SEVERE, "0Status Response" + response, "");
+			
+			
+			if(response==200){
+				String statusupdate=getUpdateStatus(req);
+				out.println(statusupdate);
+			}else{
+				out.println(Opcodes.INVALID_USER);
+			}
+			
+			out.close();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 }

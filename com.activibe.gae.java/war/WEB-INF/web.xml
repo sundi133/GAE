@@ -13,6 +13,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-class>com.activibe.gae.java.ActivibeStatusRequestHandler</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>ActivibeEmailHandler</servlet-name>
+		<servlet-class>com.activibe.gae.java.ActivibeEmailHandler</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ActivibeViz</servlet-name>
+		<servlet-class>com.activibe.gae.java.ActivibeVizHandler</servlet-class>
+	</servlet>
+	
+	
 	
 	<servlet-mapping>
 		<servlet-name>ActivibeHandler</servlet-name>
@@ -21,6 +31,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>ActivibeStatusHandler</servlet-name>
 		<url-pattern>/status</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ActivibeEmailHandler</servlet-name>
+		<url-pattern>/email</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ActivibeViz</servlet-name>
+		<url-pattern>/viz</url-pattern>
 	</servlet-mapping>
 	
 	

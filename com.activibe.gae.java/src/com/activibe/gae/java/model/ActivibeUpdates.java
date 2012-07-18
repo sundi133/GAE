@@ -1,5 +1,9 @@
 package com.activibe.gae.java.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.jdo.annotations.Persistent;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 
 @Entity
 public class ActivibeUpdates {
@@ -17,13 +22,41 @@ public class ActivibeUpdates {
 	@Persistent
 	String update_time;
 	@Persistent
+	private Date date;
+
+	@Persistent
 	String client;
 	@Persistent
 	String doctors;
 
-	String location;
+	Text update_location;
+	String locationType;
 	String energy_level;
 	String mood_level;
+	String visualizationKey;
+
+	String latitude;
+	String longitude;
+	
+	public ActivibeUpdates(String userid, String moodlevel, String energylevel,
+			String time, String location, String locationType1, String lat, String lon) {
+		// TODO Auto-generated constructor stub
+		SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy - h:m");
+		client=userid;
+		mood_level=moodlevel;
+		energy_level=energylevel;
+		update_time=time;
+		update_location=new Text(location);
+		locationType=locationType1;
+		latitude=lat;
+		longitude=lon;
+		try {
+			date = dateFormat.parse(update_time);
+		} catch (ParseException e) {
+			
+		} 
+		
+	}
 
 	public Key getStatus_id() {
 		return status_id;
@@ -58,11 +91,11 @@ public class ActivibeUpdates {
 	}
 
 	public String getLocation() {
-		return location;
+		return update_location.toString();
 	}
 
 	public void setLocation(String location) {
-		this.location = location;
+		this.update_location = new Text(location);
 	}
 
 	public String getEnergy_level() {
@@ -79,6 +112,47 @@ public class ActivibeUpdates {
 
 	public void setMood_level(String mood_level) {
 		this.mood_level = mood_level;
+	}
+
+
+	public String getVisualizationKey() {
+		return visualizationKey;
+	}
+
+	public void setVisualizationKey(String visualizationKey) {
+		this.visualizationKey = visualizationKey;
+	}
+
+	public String getLocationType() {
+		return locationType;
+	}
+
+	public void setLocationType(String locationType) {
+		this.locationType = locationType;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

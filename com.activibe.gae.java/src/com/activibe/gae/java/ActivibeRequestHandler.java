@@ -101,10 +101,7 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			out.println(response);
 			out.close();
 			break;
-		case Opcodes.UPDATE_STATUS:
-
-			break;
-
+		
 		default:
 			break;
 		}
@@ -219,10 +216,7 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			out.println(response);
 			out.close();
 			break;
-		case Opcodes.UPDATE_STATUS:
-
-			break;
-
+		
 		default:
 			break;
 		}

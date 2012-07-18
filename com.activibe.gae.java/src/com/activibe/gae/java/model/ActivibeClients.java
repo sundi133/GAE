@@ -1,5 +1,6 @@
 package com.activibe.gae.java.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.jdo.annotations.Persistent;
@@ -24,7 +25,7 @@ public class ActivibeClients {
 	String date_joined;
 
 	@Persistent
-	Set<Key> updates;
+	Set<Key> updates ;
 
 	@Persistent
 	Set<Key> doctors;
@@ -38,7 +39,8 @@ public class ActivibeClients {
 		username=username2;
 		password=password2;
 		email=email2;
-		
+		updates = new HashSet<Key>();
+		doctors = new HashSet<Key>();
 	}
 
 	public Key getClient_activibe_id() {
@@ -97,13 +99,29 @@ public class ActivibeClients {
 	public void setUpdates(Set<Key> updates) {
 		this.updates = updates;
 	}
-
+	
+	public void addUpdates(Key update) {
+		if(this.updates==null){
+			this.updates = new HashSet<Key>();
+			this.updates.add(update);
+			return;
+		}
+		this.updates.add(update);
+	}
+	
 	public Set<Key> getDoctors() {
 		return doctors;
 	}
 
 	public void setDoctors(Set<Key> doctors) {
 		this.doctors = doctors;
+	}
+	
+	public void addDoctors(Key doctor) {
+		if(this.doctors==null){
+			this.doctors = new HashSet<Key>();
+		}
+		this.doctors.add(doctor);
 	}
 
 	public String getCurr_doctor_id() {

@@ -29,5 +29,29 @@ public class Common {
 		}
 	}
 
+	static int authenticateUserID(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+
+		try{
+			String username= req.getParameter("userid");
+			int response= ActivibeDataAccessObject.INSTANCE.verifiActivibeUserID(username); 
+			return response;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return Opcodes.INVALID_USER;
+		}
+	}
+
+
+	static String authenticateUserIDGetEmail(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+
+			String username= req.getParameter("userid");
+			String response= ActivibeDataAccessObject.INSTANCE.verifiActivibeUserIDGetEmail(username); 
+			return response;
+		
+	}
+	
+
 
 }
