@@ -26,13 +26,16 @@ public class ActivibeUpdates {
 
 	@Persistent
 	String client;
+	
 	@Persistent
 	String doctors;
 
-	Text update_location;
+	String update_location;
 	String locationType;
 	String energy_level;
 	String mood_level;
+
+	@Persistent
 	String visualizationKey;
 
 	String latitude;
@@ -46,7 +49,7 @@ public class ActivibeUpdates {
 		mood_level=moodlevel;
 		energy_level=energylevel;
 		update_time=time;
-		update_location=new Text(location);
+		update_location=location;
 		locationType=locationType1;
 		latitude=lat;
 		longitude=lon;
@@ -95,7 +98,7 @@ public class ActivibeUpdates {
 	}
 
 	public void setLocation(String location) {
-		this.update_location = new Text(location);
+		this.update_location = location;
 	}
 
 	public String getEnergy_level() {

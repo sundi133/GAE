@@ -166,7 +166,7 @@ public enum ActivibeDataAccessObject {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em
-		.createQuery("select t from ActivibeUpdates t where t.client = :username");
+		.createQuery("select t from ActivibeClients t where t.username = :username");
 		q.setParameter("username", username.trim());
 		List<ActivibeClients> acl = q.getResultList();
 		if(acl.size()==1){
@@ -177,23 +177,42 @@ public enum ActivibeDataAccessObject {
 
 	}
 
-	public static void updateDataForVisualization(String userid,
+	public void updateDataForVisualization(String userid,
 			String emailtosharewith, String random) {
 		// TODO Auto-generated method stub
+		synchronized (this) {
+		
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em
 		.createQuery("select t from ActivibeUpdates t where t.client = :username");
 		q.setParameter("username", userid);
 		List<ActivibeUpdates> acl = q.getResultList();
-		if(acl.size()==1){
-			em.getTransaction().begin();
+		
+		if(acl.size()>0){
+			
 			for (int i = 0; i < acl.size(); i++) {
+				//em.getTransaction().begin();
 				acl.get(i).setVisualizationKey(random);
 				acl.get(i).setDoctors(emailtosharewith);
 				em.persist(acl.get(i));
+				//em.getTransaction().commit();
 			}
-			em.getTransaction().commit();
 			em.close();
 		}
+		
+		}
 	}
+	
+	public List<ActivibeUpdates> getUpdatesForReport(String key) {
+		// TODO Auto-generated method stub
+		EntityManager em = EMFService.get().createEntityManager();
+		Query q = em
+		.createQuery("select t from ActivibeUpdates t where t.visualizationKey = :key");
+		q.setParameter("key", key);
+		List<ActivibeUpdates> acl = q.getResultList();
+		return acl;
+
+	}
+
+
 }

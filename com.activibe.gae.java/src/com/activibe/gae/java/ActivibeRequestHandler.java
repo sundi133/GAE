@@ -211,7 +211,7 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			break;
 
 		case Opcodes.NEW_ACCOUNT:
-			System.out.println("ok1");
+			//System.out.println("ok1");
 			response= createNewAccountForUser(req);
 			out.println(response);
 			out.close();
