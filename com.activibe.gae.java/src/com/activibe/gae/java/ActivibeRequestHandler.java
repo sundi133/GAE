@@ -198,9 +198,21 @@ public class ActivibeRequestHandler  extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
+		
 		resp.setContentType("text/plain");
 		PrintWriter out = resp.getWriter();
+		if(req.getScheme().equalsIgnoreCase("http")){
+			out.println("501");
+			out.close();
+			return ;
+		}
+		if(!req.isSecure()){
+			out.println("502");
+			out.close();
+			return ;
+		}
+	
+		 int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
 
 		System.out.println("ok1");
 		switch (activibeOpcode) {

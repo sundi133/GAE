@@ -86,7 +86,7 @@ public class ActivibeStatusRequestHandler  extends HttpServlet {
 			out = resp.getWriter();
 
 			response = Common.authenticateUserID(req);
-			log.log(Level.SEVERE, "0Status Response" + response, "");
+			log.log(Level.SEVERE, "Status Response" + response, "");
 			
 			
 			if(response==200){
@@ -114,7 +114,7 @@ public class ActivibeStatusRequestHandler  extends HttpServlet {
 		String response= ActivibeDataAccessObject.INSTANCE.getActivibeUserStatus(userid);
 		log.log(Level.SEVERE, "Status Response" + response, "");
 		
-		return response;
+		return response; 
 	
 	}
 
