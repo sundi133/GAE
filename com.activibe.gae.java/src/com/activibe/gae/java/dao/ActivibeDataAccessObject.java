@@ -19,6 +19,8 @@ import com.activibe.gae.java.Opcodes;
 import com.activibe.gae.java.Status;
 import com.activibe.gae.java.model.ActivibeClients;
 import com.activibe.gae.java.model.ActivibeUpdates;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Key;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -136,32 +138,7 @@ public enum ActivibeDataAccessObject {
 		
 	}
 
-	public String getActivibeUserStatus(String userid)  {
-		// TODO Auto-generated method stub
-		EntityManager emq = EMFService.get().createEntityManager();
-		Query q = emq.createQuery("select t from ActivibeUpdates t where t.client = :username order by date asc");
-		q.setParameter("username", userid);
-		List<ActivibeUpdates> acl = q.getResultList();
 	
-		Gson gson = new Gson();
-	
-		List<Map<Integer, Status>> userstatus = new ArrayList<Map<Integer,Status>>();
-		Map<Integer, Status> smap = new HashMap<Integer, Status>();
-		for (int i = 0; i < acl.size(); i++) {
-			Status status = new Status();
-			status.setEnergy(acl.get(i).getEnergy_level());
-			status.setFeel(acl.get(i).getMood_level());
-			status.setTime(acl.get(i).getUpdate_time());
-			status.setLocation(acl.get(i).getLocation());
-			status.setLocationType(acl.get(i).getLocationType());
-			status.setLat(acl.get(i).getLatitude());
-			status.setLon(acl.get(i).getLongitude());
-			smap.put(i+1, status);
-		}
-		userstatus.add(smap);
-		return gson.toJson(userstatus);
-	}
-
 	public String verifiActivibeUserIDGetEmail(String username) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
@@ -211,6 +188,83 @@ public enum ActivibeDataAccessObject {
 		q.setParameter("key", key);
 		List<ActivibeUpdates> acl = q.getResultList();
 		return acl;
+
+	}
+
+	public String getActivibeUserStatus(String userid)  {
+		// TODO Auto-generated method stub
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		//Query q1= new Query("ActivibeUpdates");
+		EntityManager emq = EMFService.get().createEntityManager();
+		Query q = emq.createQuery("select t from ActivibeUpdates t where t.client = :username order by date");
+		
+		
+		q.setParameter("username", userid);
+		List<ActivibeUpdates> acl = q.getResultList();
+	
+		Gson gson = new Gson();
+	
+		List<Map<Integer, Status>> userstatus = new ArrayList<Map<Integer,Status>>();
+		Map<Integer, Status> smap = new HashMap<Integer, Status>();
+		for (int i = 0; i < acl.size(); i++) {
+			Status status = new Status();
+			status.setEnergy(acl.get(i).getEnergy_level());
+			status.setFeel(acl.get(i).getMood_level());
+			status.setTime(acl.get(i).getUpdate_time());
+			status.setLocation(acl.get(i).getLocation());
+			status.setLocationType(acl.get(i).getLocationType());
+			status.setLat(acl.get(i).getLatitude());
+			status.setLon(acl.get(i).getLongitude());
+			smap.put(i+1, status);
+		}
+		userstatus.add(smap);
+		return gson.toJson(userstatus);
+	}
+
+	
+	public String getActivibeUserStatus(String userid, String pnum, int plimit) {
+		// TODO Auto-generated method stub
+		int pagenum=Integer.parseInt(pnum);
+		int pagelimit=plimit;
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		//Query q1= new Query("ActivibeUpdates");
+		EntityManager emq = EMFService.get().createEntityManager();
+		Query q = emq.createQuery("select t from ActivibeUpdates t where t.client = :username order by date");
+		
+		
+		q.setParameter("username", userid);
+		List<ActivibeUpdates> acl = q.getResultList();
+	
+		Gson gson = new Gson();
+	
+		List<Map<Integer, Status>> userstatus = new ArrayList<Map<Integer,Status>>();
+		Map<Integer, Status> smap = new HashMap<Integer, Status>();
+		int start=pagenum*plimit;
+		int end= pagenum*plimit + plimit;
+		
+		if(start < 0){
+			start=0;
+			end=plimit;
+		}
+		
+		if(end >acl.size()){
+			start=acl.size()-plimit;
+			end = acl.size();
+		}
+		
+		for (int i = start; i < end; i++) {
+			Status status = new Status();
+			status.setEnergy(acl.get(i).getEnergy_level());
+			status.setFeel(acl.get(i).getMood_level());
+			status.setTime(acl.get(i).getUpdate_time());
+			status.setLocation(acl.get(i).getLocation());
+			status.setLocationType(acl.get(i).getLocationType());
+			status.setLat(acl.get(i).getLatitude());
+			status.setLon(acl.get(i).getLongitude());
+			smap.put(i+1, status);
+		}
+		userstatus.add(smap);
+		return gson.toJson(userstatus);
 
 	}
 

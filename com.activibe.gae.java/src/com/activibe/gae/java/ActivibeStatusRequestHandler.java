@@ -45,7 +45,8 @@ import javax.mail.internet.MimeMessage;
 
 @SuppressWarnings("serial")
 public class ActivibeStatusRequestHandler  extends HttpServlet {
-	private static final Logger log = Logger.getLogger(ActivibeStatusRequestHandler.class.getName()); 
+	private static final Logger log = Logger.getLogger(ActivibeStatusRequestHandler.class.getName());
+	private final int PAGE_LIMIT = 4; 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
@@ -111,7 +112,15 @@ public class ActivibeStatusRequestHandler  extends HttpServlet {
 	private String getUpdateStatus(HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		String userid = req.getParameter("userid");
-		String response= ActivibeDataAccessObject.INSTANCE.getActivibeUserStatus(userid);
+		String devicetype = req.getParameter("devicetype");
+		String pnum = req.getParameter("pnum");
+		String response="";
+		if(devicetype.equalsIgnoreCase("iose")){
+			response= ActivibeDataAccessObject.INSTANCE.getActivibeUserStatus(userid,pnum,PAGE_LIMIT);
+		}else{
+			response= ActivibeDataAccessObject.INSTANCE.getActivibeUserStatus(userid);
+		}
+		
 		log.log(Level.SEVERE, "Status Response" + response, "");
 		
 		return response; 
