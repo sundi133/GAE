@@ -39,6 +39,9 @@ import com.google.appengine.api.mail.MailServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -84,11 +87,11 @@ public class ActivibeEmailHandler  extends HttpServlet {
 
 		
 		int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
-		resp.setContentType("text/plain");
-		PrintWriter out = resp.getWriter();
-
+		
 		switch (activibeOpcode) {
 		case Opcodes.EMAILTOSENDDATA :
+			resp.setContentType("text/plain");
+			PrintWriter out = resp.getWriter();
 			String response = Common.authenticateUserIDGetEmail(req);
 			if(response.contains("@")){
 				int mailresponse = sendMail(req,response);
@@ -99,6 +102,23 @@ public class ActivibeEmailHandler  extends HttpServlet {
 				out.println(response);
 				out.close();
 			}
+			break;
+
+		case Opcodes.EMAILFROMCLIENT :
+			int responseauth = Common.authenticateUserID(req);
+			resp.setContentType("application/json");
+			out = resp.getWriter();
+			if(responseauth==200){
+				String mailcontents = getMail(req);
+				out.println(mailcontents);
+				out.close();
+			
+			}else{
+				out.println(Opcodes.INVALID_USER+"");
+				out.close();
+			
+			}
+						
 			break;
 
 		default:
@@ -108,16 +128,42 @@ public class ActivibeEmailHandler  extends HttpServlet {
 
 	}
 	
+	private String getMail(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		String userid    = req.getParameter("userid");
+    	
+		String link=generateRandomLink(userid,"");
+    	String subject="Data Reports from Activibe ";
+        String msgBody = "Hi, \n " +
+        		"\t"+getUser(userid) +" has shared Activibe data with you." + " "+
+        		"Please click on the link to access the report. "+
+        		link + " \n\n\n"+
+        		"Thanks \n"+
+        		"Activibe Team \n";
+
+
+        
+        //Gson gson = new Gson();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		MailMessage mailmsg = new MailMessage();
+		
+		mailmsg.setSubject(subject);
+		mailmsg.setMsgbody(msgBody);
+		return gson.toJson(mailmsg);
+
+
+	}
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
 		
 		int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
-		resp.setContentType("text/plain");
-		PrintWriter out = resp.getWriter();
-
+	
 		switch (activibeOpcode) {
 		case Opcodes.EMAILTOSENDDATA :
+			resp.setContentType("text/plain");
+			PrintWriter out = resp.getWriter();
 			String response = Common.authenticateUserIDGetEmail(req);
 			if(response.contains("@")){
 				int mailresponse = sendMail(req,response);
@@ -128,6 +174,23 @@ public class ActivibeEmailHandler  extends HttpServlet {
 				out.println(response);
 				out.close();
 			}
+			break;
+
+		case Opcodes.EMAILFROMCLIENT :
+			resp.setContentType("application/json");
+			out = resp.getWriter();
+			int responseauth = Common.authenticateUserID(req);
+			if(responseauth==200){
+				String mailcontents = getMail(req);
+				out.println(mailcontents);
+				out.close();
+			
+			}else{
+				out.println(Opcodes.INVALID_USER+"");
+				out.close();
+			
+			}
+						
 			break;
 
 		default:
@@ -196,7 +259,7 @@ public class ActivibeEmailHandler  extends HttpServlet {
 		BigInteger b = new BigInteger(128, new Random());
 		String codevis=b.toString();
 		ActivibeDataAccessObject.INSTANCE.updateDataForVisualization(userid,emailtosharewith,codevis);
-		String link = "http://activibealpha.appspot.com/viz.jsp?code="+codevis;
+		String link = "https://activibealpha.appspot.com/viz.jsp?code="+codevis;
 		return link;
 	}
 }

@@ -8,6 +8,7 @@ public class Status {
     private String locationType;
     private String lat;
     private String lon;
+    private String day_time;
 
     public String getFeel() {
 		return feel;
@@ -50,6 +51,12 @@ public class Status {
 	}
 	public void setLon(String lon) {
 		this.lon = lon;
+	}
+	public String getDay_time() {
+		return day_time;
+	}
+	public void setDay_time(String day_time) {
+		this.day_time = day_time;
 	}
     
     

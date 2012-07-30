@@ -19,6 +19,7 @@ public class Opcodes {
 	public final static int UPDATE_STATUS = 6267;
 	public final static int GET_UPDATE_STATUS = 6268;
 	public static final int EMAILTOSENDDATA = 6269;
+	public static final int EMAILFROMCLIENT = 6270;
 	
 	public static final int SUCCESS = 200;
 	

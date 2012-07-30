@@ -3,6 +3,9 @@ package com.activibe.gae.java.dao;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -257,6 +260,7 @@ public enum ActivibeDataAccessObject {
 			status.setEnergy(acl.get(i).getEnergy_level());
 			status.setFeel(acl.get(i).getMood_level());
 			status.setTime(acl.get(i).getUpdate_time());
+			status.setDay_time(getWeekDayTime(acl.get(i).getUpdate_time()));
 			status.setLocation(acl.get(i).getLocation());
 			status.setLocationType(acl.get(i).getLocationType());
 			status.setLat(acl.get(i).getLatitude());
@@ -266,6 +270,24 @@ public enum ActivibeDataAccessObject {
 		userstatus.add(smap);
 		return gson.toJson(userstatus);
 
+	}
+
+	private String getWeekDayTime(String update_time){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy - h:m");
+		String[] weekdays={"Sun","Mon","Tue","Wed","Thur","Fri","Sat"}; 
+		// TODO Auto-generated method stub
+		java.util.Date date;
+		try {
+			date = dateFormat.parse(update_time);
+			int day =date.getDay();
+			return weekdays[day] +" "+ date.getHours() +"."+ date.getMinutes() ;
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+		
 	}
 
 

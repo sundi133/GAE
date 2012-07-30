@@ -65,12 +65,12 @@
 		<% for( int k=0; k < updates.size(); k++ ){ %>
 			feel.push(<%=updates.get(k).getMood_level()%>)
 			energy.push( <%=updates.get(k).getEnergy_level()%>)
-			time.push('<%=updates.get(k).getUpdate_time()%>')
-			ticks.push('<%=updates.get(k).getDate()%>')
-			place.push('<%=updates.get(k).getLocation()%>')
-			placetype.push('<%=updates.get(k).getLocationType()%>')
-			lat.push('<%=updates.get(k).getLatitude()%>')
-			lon.push('<%=updates.get(k).getLongitude()%>')
+			time.push("<%=updates.get(k).getUpdate_time()%>")
+			ticks.push("<%=updates.get(k).getDate()%>")
+			place.push("<%=updates.get(k).getLocation()%>")
+			placetype.push("<%=updates.get(k).getLocationType()%>")
+			lat.push("<%=updates.get(k).getLatitude()%>")
+			lon.push("<%=updates.get(k).getLongitude()%>")
 		<% }%>
      
     	var plot1 = $.jqplot('chart1', [feel, energy], {
