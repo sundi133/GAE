@@ -36,7 +36,7 @@
 			}
 			
 			html, body, #chart1 {
-    			height: 85%;
+    			height: 70%;
 			}
 			
   		</style>
@@ -55,25 +55,27 @@
 		<table width="100%">
 		<td align="left">
 		<a href="javascript:rightslide();" id="right">
-			<img src="./images/left.png" height="42" width="42"/>
+			<img src="./images/Left_Arrow.png" height="42" width="42"/>
 		</a>
 		</td>
 		
 		<td align="right">
 		<a href="javascript:leftslide();" id="left">
-			<img src="./images/right.png" height="42" width="42"/>
+			<img src="./images/Right_Arrow.png" height="42" width="42"/>
 		</a>
 		</td>
 		</table>
 		<% String userid= request.getParameter("userid"); %>
 		
 		
-    	<div id="chart1" style="width:100%;"></div>
-		
+    	
 		<div><span id="info1"></span> <span id="info2"></span> <span id="info3"></span></div>
     	
     	<pre class="code brush:js"></pre>
 
+		<div id="chart1" style="width:100%;"></div>
+		
+		
 		<script type="text/javascript">
 	
 		var feel = [];
