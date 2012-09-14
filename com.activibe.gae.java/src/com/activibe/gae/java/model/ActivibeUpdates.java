@@ -44,7 +44,7 @@ public class ActivibeUpdates {
 	public ActivibeUpdates(String userid, String moodlevel, String energylevel,
 			String time, String location, String locationType1, String lat, String lon) {
 		// TODO Auto-generated constructor stub
-		SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy - h:m");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy - h:m");
 		client=userid;
 		mood_level=moodlevel;
 		energy_level=energylevel;

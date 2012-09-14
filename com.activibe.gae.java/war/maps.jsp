@@ -58,8 +58,8 @@
     </script>
   </head>
   <body onload="initialize()">
-  	<div style="position: relative; left: 0; top: 0; "  align="center">
-  	<img src="./images/backmaps.png"/ onclick="history.go(-1);return false;">
+  	<div style="position: relative; left: 0; top: 0; "  align="left" >
+  	<img src="./images/Left_Arrow.png"/ onclick="history.go(-1);return false;" height="50" width="50">
   	</div>
 
     <div id="map_canvas"></div>

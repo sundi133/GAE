@@ -51,21 +51,34 @@
 	</head>
 	<body>
 	
-		 
+		 <% 
+		 if(request.getScheme().equalsIgnoreCase("http") || !request.isSecure()){
+			
+		%>
+		<center>	<h3> Sorry, Request cannot be served. </h3> </center>	
+		<% } else if(request.isSecure()) 
+		{ 
+		%>
 		<table width="100%">
 		<td align="left">
 		<a href="javascript:rightslide();" id="right">
-			<img src="./images/Left_Arrow.png" height="42" width="42"/>
+			<img src="./images/Left_Arrow.png" height="50" width="50"/>
 		</a>
+		</td>
+		
+		<td align="center">
+		<div id="date"></div>
 		</td>
 		
 		<td align="right">
 		<a href="javascript:leftslide();" id="left">
-			<img src="./images/Right_Arrow.png" height="42" width="42"/>
+			<img src="./images/Right_Arrow.png" height="50" width="50"/>
 		</a>
 		</td>
 		</table>
-		<% String userid= request.getParameter("userid"); %>
+		<% 
+		String userid= request.getParameter("userid"); 
+		%>
 		
 		
     	
@@ -105,6 +118,7 @@
        			    	feel.push(value.feel)
 						energy.push(value.energy)
 						time.push(value.time)
+						document.getElementById('date').innerHTML = dateFunction(value.time)
 						ticks.push(value.day_time)
 						place.push(value.location)
 						placetype.push(value.locationType)
@@ -224,6 +238,7 @@
        			    	feel.push(value.feel)
 						energy.push(value.energy)
 						time.push(value.time)
+						document.getElementById('date').innerHTML = dateFunction(value.time)
 						ticks.push(value.day_time)
 						place.push(value.location)
 						placetype.push(value.locationType)
@@ -326,8 +341,17 @@
 	
 	
 	}
-	function cleardata(){
 	
+	function dateFunction(str){
+	// str format should be mm/dd/yyyy - hr:mm. Separator can be anything e.g. / or -. It wont effect
+	var mon   = parseInt(str.substring(0,2),10);
+	var dat  = parseInt(str.substring(3,5),10);
+	var yr   = parseInt(str.substring(6,10),10);
+	var date = new Date(yr, mon, dat);
+	return date.toDateString();
+	}
+	
+	function cleardata(){
 		jQuery("#chart1").html('');
 		feel = [];
     	energy = [];
@@ -356,6 +380,7 @@
        			    	feel.push(value.feel)
 						energy.push(value.energy)
 						time.push(value.time)
+						document.getElementById('date').innerHTML = dateFunction(value.time)
 						ticks.push(value.day_time)
 						place.push(value.location)
 						placetype.push(value.locationType)
@@ -463,6 +488,7 @@
     }
 	 
 	</script>
+	<% } %>
 	</body>
 </html>	
 	

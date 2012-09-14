@@ -198,7 +198,7 @@ public class ActivibeRequestHandler  extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		
+
 		resp.setContentType("text/plain");
 		PrintWriter out = resp.getWriter();
 		if(req.getScheme().equalsIgnoreCase("http")){

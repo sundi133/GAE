@@ -77,12 +77,47 @@ public class ActivibeVizHandler  extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
-		resp.sendRedirect("/viz.jsp");
+		resp.setContentType("text/plain");
+		PrintWriter out = resp.getWriter();
+		if(req.getScheme().equalsIgnoreCase("http")){
+			out.println("501");
+			out.close();
+			return ;
+		}
+		else if(!req.isSecure()){
+			out.println("502");
+			out.close();
+			return ;
+		}else if(req.isSecure()){
+			resp.sendRedirect("./mobilereport.jsp?userid=" + req.getParameter("userid"));
+		}else{
+			out.println("500");
+			out.close();
+			return ;
+		}
+		
 	}
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
-		resp.sendRedirect("/viz.jsp");
+		resp.setContentType("text/plain");
+		PrintWriter out = resp.getWriter();
+		if(req.getScheme().equalsIgnoreCase("http")){
+			out.println("501");
+			out.close();
+			return ;
+		}
+		else if(!req.isSecure()){
+			out.println("502");
+			out.close();
+			return ;
+		}else if(req.isSecure()){
+			resp.sendRedirect("./mobilereport.jsp?userid=" + req.getParameter("userid"));
+		}else{
+			out.println("500");
+			out.close();
+			return ;
+		}
 	}
 }
