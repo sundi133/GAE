@@ -29,12 +29,9 @@
     stale session data. For details, see
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
-    <async-session-persistence enabled="true" />
-  
     <ssl-enabled>true</ssl-enabled>
-    
 	<inbound-services>
 		<service>mail</service>
 	</inbound-services>
-	
+	<threadsafe>true</threadsafe>
 </appengine-web-app>

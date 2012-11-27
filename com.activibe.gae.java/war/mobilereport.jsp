@@ -344,7 +344,7 @@
 	
 	function dateFunction(str){
 	// str format should be mm/dd/yyyy - hr:mm. Separator can be anything e.g. / or -. It wont effect
-	var mon   = parseInt(str.substring(0,2),10);
+	var mon   = parseInt(str.substring(0,2),10)-1;
 	var dat  = parseInt(str.substring(3,5),10);
 	var yr   = parseInt(str.substring(6,10),10);
 	var date = new Date(yr, mon, dat);

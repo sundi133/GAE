@@ -37,19 +37,27 @@ import sun.org.mozilla.javascript.internal.WrapFactory;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.google.gson.Gson;
- 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public enum ActivibeDataAccessObject {
+
 	
 	INSTANCE;
 	// succes created, send 200 opcode for success.
 	public int createActivibeUser(String username, String password,
 			String email) {
 		// TODO Auto-generated method stub
-		if(checkUser(username,email))
+		System.out.println("1");
+		if(checkUser(username,email)){
+			System.out.println("3");
 			return Opcodes.USER_ALREADY_EXISTS;
+		}
+			
 		else{
 			synchronized(this) {
+				System.out.println("2");
 				EntityManager em = EMFService.get().createEntityManager();
 				ActivibeClients acl = new ActivibeClients(username,password,email);
 				em.persist(acl);

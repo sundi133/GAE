@@ -1,11 +1,4 @@
-<!-- Indices written at Sun, 5 Aug 2012 15:20:46 UTC -->
+<!-- Indices written at Wed, 10 Oct 2012 15:12:33 UTC -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="ActivibeUpdates" ancestor="false" source="auto">
-        <property name="client" direction="asc"/>
-        <property name="date" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

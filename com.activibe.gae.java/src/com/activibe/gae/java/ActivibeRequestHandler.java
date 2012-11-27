@@ -66,7 +66,6 @@ import java.util.Properties;
 
 public class ActivibeRequestHandler  extends HttpServlet {
 
-
 	private static final Logger log = Logger.getLogger(ActivibeRequestHandler.class.getName()); 
 
 	@Override
@@ -97,7 +96,9 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			break;
 
 		case Opcodes.NEW_ACCOUNT:
+			log.log(Level.SEVERE, "email1" , "");
 			response= createNewAccountForUser(req);
+			log.log(Level.SEVERE, "email2" , "");
 			out.println(response);
 			out.close();
 			break;
@@ -114,18 +115,16 @@ public class ActivibeRequestHandler  extends HttpServlet {
 	private int createNewAccountForUser(HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		try{
-			System.out.println("ok2");
 			String username= req.getParameter("username");
 			String password=req.getParameter("password");
 			String email= req.getParameter("email");
-
 			int response= ActivibeDataAccessObject.INSTANCE.createActivibeUser(username,password,email);
+			log.log(Level.SEVERE, "email3" , "");
 			if(response==Opcodes.SUCCESS)
 				sendMail(email,username,password);
 			return response;
 		}catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("ok3");
 			return Opcodes.ERR_CREATION; //error creating account
 		}
 
@@ -137,9 +136,9 @@ public class ActivibeRequestHandler  extends HttpServlet {
 		Session session = Session.getDefaultInstance(props, null);
 
 
-		String SENDER="activibealpha@appspot.gserviceaccount.com";
-		String msgBody = "Hi " + username +", \n Your account has been successfully created. Thanks for signing up for the alpha version.\n\t Activibe Team";
-
+		String SENDER="admin@activibealpha.appspotmail.com";
+		//admin@activibealpha.appspotmail.com
+		String msgBody = "Hi " + username +", \n\t Your account has been successfully created. Thanks for signing up for the alpha version.\n\n Activibe Team";
 		String subject="Your Activibealpha account has been activated";
 		//		try {
 		//
@@ -165,7 +164,8 @@ public class ActivibeRequestHandler  extends HttpServlet {
 		int count=0;
 		try {
 			count++;
-			MimeMessage message = new MimeMessage(session, null);
+			log.log(Level.SEVERE, "MessagingException" + count , "");
+			MimeMessage message = new MimeMessage(session);
 			count++;
 			// Set the body with whatever text you want
 			Multipart outboundMultipart = new MimeMultipart();
@@ -183,6 +183,7 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			message.setFrom(new InternetAddress(SENDER, "Activibe Account account"));
 			count++;
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(email, username));
+			log.log(Level.SEVERE, "MessagingException" + count, "");
 			count++;
 			Transport.send(message);
 			count++;
@@ -214,7 +215,6 @@ public class ActivibeRequestHandler  extends HttpServlet {
 	
 		 int activibeOpcode = Integer.parseInt(req.getParameter("opcode"));
 
-		System.out.println("ok1");
 		switch (activibeOpcode) {
 		case Opcodes.LOGIN :
 			int response = Common.authenticateUser(req);
@@ -223,7 +223,6 @@ public class ActivibeRequestHandler  extends HttpServlet {
 			break;
 
 		case Opcodes.NEW_ACCOUNT:
-			//System.out.println("ok1");
 			response= createNewAccountForUser(req);
 			out.println(response);
 			out.close();
